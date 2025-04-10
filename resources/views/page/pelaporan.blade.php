@@ -129,13 +129,13 @@
                     <div class="mb-3">
 
                         <p class="text-muted small">Lokasi tempat kejadian</p>
-                        <input class="form-control" id="lokasi_kejadian" name="kronologi" rows="4"></input>
+                        <input class="form-control" id="lokasi_kejadian" name="lokasi_kejadian" rows="4"></input>
                     </div>
                     <div class="mb-3">
 
                         <p class="text-muted small">Kapan terjadinya? (jelaskan tanggal, waktu, selama/selepas jam kerja)
                         </p>
-                        <input class="form-control" id="waktu_kejadian" name="kronologi" rows="4"></input>
+                        <input class="form-control" id="waktu_kejadian" name="waktu_kejadian" rows="4"></input>
                     </div>
                     <div class="mb-3">
 
