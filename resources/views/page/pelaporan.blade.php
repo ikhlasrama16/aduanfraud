@@ -1,61 +1,236 @@
 @extends('layouts.index')
 @section('content')
-    <h2>halaman form pelaporan</h2>
-    <div class="accordion" id="formAccordion">
-        <!-- Accordion Item 1 -->
+    <h2>Halaman form pelaporan</h2>
+    <form class="accordion" id="formAccordion" enctype="multipart/form-data">
+        @csrf
+        <!-- Accordion Item 1: Identitas Pelapor -->
         <div class="accordion-item">
             <h2 class="accordion-header" id="headingOne">
-                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne"
-                    aria-expanded="true" aria-controls="collapseOne">
-                    #1. Data Siswa
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                    #1. Identitas Pelapor
                 </button>
             </h2>
-            <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne"
-                data-bs-parent="#formAccordion">
+            <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne">
                 <div class="accordion-body">
-                    <div class="row">
-                        <!-- Input NISN -->
-                        <div class="col-md-6 mb-3">
-                            <label for="nisn" class="form-label">NISN</label>
-                            <input type="text" class="form-control" id="nisn" name="nisn"
-                                placeholder="Masukan NISN">
+                    <!-- Pilihan Kerahasiaan Identitas -->
+                    <div class="mb-4">
+                        <label class="form-label d-block fw-bold">Apakah Anda ingin merahasiakan identitas
+                            (anonymous)?</label>
+                        <p class="text-muted small">Silakan pilih Ya jika Anda tidak ingin identitas Anda diketahui.</p>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="anonymous" id="anonymous_yes"
+                                value="ya">
+                            <label class="form-check-label" for="anonymous_yes">Ya</label>
                         </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="anonymous" id="anonymous_no"
+                                value="tidak">
+                            <label class="form-check-label" for="anonymous_no">Tidak</label>
+                        </div>
+                    </div>
 
-                        <!-- Input Jenis Kelamin -->
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Identitas Anda</label>
+                        <p class="text-muted small">Isi data diri Anda secara lengkap, kecuali Anda memilih untuk tetap
+                            anonim.</p>
+                    </div>
+                    <div class="row">
                         <div class="col-md-6 mb-3">
-                            <label for="jenis_kelamin" class="form-label">Jenis Kelamin</label>
-                            <select class="form-select" id="jenis_kelamin" name="jenis_kelamin">
-                                <option selected disabled>Pilih jenis kelamin</option>
-                                <option value="Laki-laki">Laki-laki</option>
-                                <option value="Perempuan">Perempuan</option>
+                            <label for="nama" class="form-label">Nama</label>
+                            <input type="text" class="form-control" id="nama_pelapor" name="nama_pelapor"
+                                placeholder="Masukan nama">
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="nik" class="form-label">NIK</label>
+                            <input type="number" class="form-control" id="nik" name="nik"
+                                placeholder="Masukan NIK">
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Pihak</label>
+                            <select class="form-select" name="pihak">
+                                <option value="">Pilih...</option>
+                                <option value="internal">Internal</option>
+                                <option value="eksternal">Eksternal</option>
                             </select>
                         </div>
-                    </div>
-
-                </div>
-            </div>
-
-            <!-- Accordion Item 2 -->
-            <div class="accordion-item">
-                <h2 class="accordion-header" id="headingTwo">
-                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                        data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                        #2. Data Orang Tua
-                    </button>
-                </h2>
-                <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo"
-                    data-bs-parent="#formAccordion">
-                    <div class="accordion-body">
-                        <!-- Form Data Orang Tua -->
-                        <div class="mb-3">
-                            <label for="nama_ayah" class="form-label">Nama Ayah</label>
-                            <input type="text" class="form-control" id="nama_ayah" name="nama_ayah">
+                        <div class="col-md-6 mb-3">
+                            <label for="lokasi" class="form-label">Lokasi Mitra</label>
+                            <input type="text" class="form-control" id="lokasi" name="lokasi"
+                                placeholder="Masukan lokasi mitra">
                         </div>
-                        <!-- dst -->
+                        <div class="col-md-6 mb-3">
+                            <label for="telepon" class="form-label">Nomor Telepon</label>
+                            <input type="text" class="form-control" id="telepon" name="telepon"
+                                placeholder="Masukan nomor telepon">
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="email" class="form-label">Email</label>
+                            <input type="email" class="form-control" id="email" name="email"
+                                placeholder="Masukan email">
+                        </div>
                     </div>
                 </div>
             </div>
-
-            <!-- Tambahkan accordion item lain sesuai kebutuhan -->
         </div>
-    @endsection
+
+        <!-- Accordion Item 2: Isi Pelaporan -->
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="headingTwo">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                    #2. Isi Pelaporan
+                </button>
+            </h2>
+            <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo">
+                <div class="accordion-body">
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Informasi Terlapor</label>
+                        <p class="text-muted small">Harap lengkapi nama dan jabatan pihak yang dilaporkan.</p>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="nama_terlapor" class="form-label">Nama Terlapor</label>
+                            <input type="text" class="form-control" id="nama_terlapor" name="nama_terlapor">
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="jabatan_terlapor" class="form-label">Jabatan Terlapor</label>
+                            <input type="text" class="form-control" id="jabatan_terlapor" name="jabatan_terlapor">
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Kategori Pelanggaran</label>
+                        <p class="text-muted small">Silakan pilih satu atau lebih kategori yang sesuai dengan pelaporan
+                            Anda.</p>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" name="kategori[]"
+                                value="Penyalahgunaan Wewenang" id="kategori1">
+                            <label class="form-check-label" for="kategori1">Penyalahgunaan Wewenang</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" name="kategori[]" value="Pencurian Dana"
+                                id="kategori2">
+                            <label class="form-check-label" for="kategori2">Pencurian atau penyalahgunaan Dana Bank /
+                                Nasabah</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" name="kategori[]" value="Gratifikasi"
+                                id="kategori3">
+                            <label class="form-check-label" for="kategori3">Penerimaan hadiah atau gratifikasi</label>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+
+                        <p class="text-muted small">Berikan penjelasan lengkap atas kejadian yang dilaporkan</p>
+                        <input class="form-control" id="kronologi" name="penjelasan" rows="4"></input>
+                    </div>
+                    <div class="mb-3">
+
+                        <p class="text-muted small">Lokasi tempat kejadian</p>
+                        <input class="form-control" id="lokasi_kejadian" name="kronologi" rows="4"></input>
+                    </div>
+                    <div class="mb-3">
+
+                        <p class="text-muted small">Kapan terjadinya? (jelaskan tanggal, waktu, selama/selepas jam kerja)
+                        </p>
+                        <input class="form-control" id="waktu_kejadian" name="kronologi" rows="4"></input>
+                    </div>
+                    <div class="mb-3">
+
+                        <p class="text-muted small">Berikan penjelasan bagaimana kejadiannya (kronologis)
+                        </p>
+                        <textarea class="form-control" id="kronologi" name="kronologi" rows="4"></textarea>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="kerugian" class="form-label fw-bold">Perkiraan Kerugian</label>
+                        <p class="text-muted small">Jika ada, mohon sampaikan nilai kerugian akibat kejadian ini.</p>
+                        <input type="text" class="form-control" id="kerugian" name="kerugian">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="saksi" class="form-label fw-bold">Saksi</label>
+                        <p class="text-muted small">Cantumkan nama saksi yang mengetahui kejadian, jika ada.</p>
+                        <input type="text" class="form-control" id="saksi" name="saksi">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="bukti" class="form-label fw-bold">Bukti Pendukung</label>
+                        <p class="text-muted small">Upload file yang mendukung pelaporan Anda, seperti foto, dokumen, atau
+                            rekaman.</p>
+                        <input type="file" class="form-control" id="file_bukti" name="file_bukti" multiple>
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="form-label fw-bold">Apakah ada dugaan orang lain yang terlibat? Jika YA, mohon
+                            disebutkan</label>
+                        <div class="row">
+                            <div class="col-md-6 mb-2">
+                                <input type="text" class="form-control" name="dugaan_nama[]" placeholder="Nama">
+                            </div>
+                            <div class="col-md-6 mb-2">
+                                <input type="text" class="form-control" name="dugaan_jabatan[]"
+                                    placeholder="Jabatan">
+                            </div>
+                            <div class="col-md-6 mb-2">
+                                <input type="text" class="form-control" name="dugaan_nama[]" placeholder="Nama">
+                            </div>
+                            <div class="col-md-6 mb-2">
+                                <input type="text" class="form-control" name="dugaan_jabatan[]"
+                                    placeholder="Jabatan">
+                            </div>
+                            <div class="col-md-6 mb-2">
+                                <input type="text" class="form-control" name="dugaan_nama[]" placeholder="Nama">
+                            </div>
+                            <div class="col-md-6 mb-2">
+                                <input type="text" class="form-control" name="dugaan_jabatan[]"
+                                    placeholder="Jabatan">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="form-label fw-bold">Apakah ada saksi mata? Jika YA, mohon disebutkan</label>
+                        <div class="row">
+                            <div class="col-md-6 mb-2">
+                                <input type="text" class="form-control" name="saksi_nama[]" placeholder="Nama">
+                            </div>
+                            <div class="col-md-6 mb-2">
+                                <input type="text" class="form-control" name="saksi_jabatan[]" placeholder="Jabatan">
+                            </div>
+                            <div class="col-md-6 mb-2">
+                                <input type="text" class="form-control" name="saksi_nama[]" placeholder="Nama">
+                            </div>
+                            <div class="col-md-6 mb-2">
+                                <input type="text" class="form-control" name="saksi_jabatan[]" placeholder="Jabatan">
+                            </div>
+                            <div class="col-md-6 mb-2">
+                                <input type="text" class="form-control" name="saksi_nama[]" placeholder="Nama">
+                            </div>
+                            <div class="col-md-6 mb-2">
+                                <input type="text" class="form-control" name="saksi_jabatan[]" placeholder="Jabatan">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Apakah kejadian ini pernah terjadi sebelumnya? Jika YA,
+                            berikan penjelasan</label>
+                        <textarea class="form-control" name="kejadian_terulang" rows="3"></textarea>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Apakah kejadian ini menyebabkan kerugian finansial terhadap
+                            perusahaan? Jika YA, berapa besar jumlah kerugian yang diperkirakan?</label>
+                        <input type="text" class="form-control" name="kerugian_finansial">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="mt-4 text-end">
+            <button type="submit" class="btn btn-success">Kirim Laporan</button>
+        </div>
+    </form>
+@endsection

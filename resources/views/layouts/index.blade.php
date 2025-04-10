@@ -17,8 +17,8 @@
 <body>
     @include('layouts.navbar')
 
-    <div class="container my-4">
-        <div class="row">
+    <div class=" my-4">
+        <div class="row d-flex align-items-stretch">
             <!-- Sidebar (1/4) -->
             @include('layouts.sidebar')
 

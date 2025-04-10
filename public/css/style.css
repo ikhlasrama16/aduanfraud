@@ -27,3 +27,6 @@ body{
     color: white !important;
   }
 
+  .sidebar-sticky {
+    height: 100%;
+}
