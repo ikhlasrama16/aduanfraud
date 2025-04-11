@@ -1,7 +1,8 @@
 @extends('layouts.index')
 @section('content')
     <h2>Halaman form pelaporan</h2>
-    <form class="accordion" id="formAccordion" enctype="multipart/form-data">
+    <form action="{{ route('pelaporan_process') }}" class="accordion" id="formAccordion" enctype="multipart/form-data"
+        method="POST">
         @csrf
         <!-- Accordion Item 1: Identitas Pelapor -->
         <div class="accordion-item">
@@ -91,11 +92,12 @@
                     <div class="row">
                         <div class="col-md-6 mb-3">
                             <label for="nama_terlapor" class="form-label">Nama Terlapor</label>
-                            <input type="text" class="form-control" id="nama_terlapor" name="nama_terlapor">
+                            <input type="text" class="form-control" id="nama_terlapor" name="nama_terlapor" required>
                         </div>
                         <div class="col-md-6 mb-3">
                             <label for="jabatan_terlapor" class="form-label">Jabatan Terlapor</label>
-                            <input type="text" class="form-control" id="jabatan_terlapor" name="jabatan_terlapor">
+                            <input type="text" class="form-control" id="jabatan_terlapor" name="jabatan_terlapor"
+                                required>
                         </div>
                     </div>
 
@@ -103,51 +105,72 @@
                         <label class="form-label fw-bold">Kategori Pelanggaran</label>
                         <p class="text-muted small">Silakan pilih satu atau lebih kategori yang sesuai dengan pelaporan
                             Anda.</p>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" name="kategori[]"
-                                value="Penyalahgunaan Wewenang" id="kategori1">
-                            <label class="form-check-label" for="kategori1">Penyalahgunaan Wewenang</label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" name="kategori[]" value="Pencurian Dana"
-                                id="kategori2">
-                            <label class="form-check-label" for="kategori2">Pencurian atau penyalahgunaan Dana Bank /
-                                Nasabah</label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" name="kategori[]" value="Gratifikasi"
-                                id="kategori3">
-                            <label class="form-check-label" for="kategori3">Penerimaan hadiah atau gratifikasi</label>
+
+                        @php
+                            $kategoriList = [
+                                'Pencurian atau penyalahgunaan Dana Bank atau dana Nasabah atau pihak lainnya',
+                                'Pencurian atau penyalahgunaan non-cash asset (Informasi, database, inventaris kantor)',
+                                'Pemalsuan (Dokumen, tandatangan)',
+                                'Penyuapan/Gratifikasi',
+                                'Pemerasan',
+                                'Penerimaan tidak sah',
+                                'Pelanggaran kode etik',
+                                'Ketidaknyamanan kerja (perundungan, intimidasi, pelecehan, tindakan asusila lainnya)',
+                                'Misselling/misleading penjualan produk',
+                                'Pencucian uang dan pendanaan terorisme',
+                                'Benturan kepentingan',
+                                'Kecurangan laporan keuangan',
+                                'Penipuan',
+                                'Pembocoran informasi rahasia Bank',
+                            ];
+                        @endphp
+
+                        <div class="row">
+                            @foreach ($kategoriList as $index => $kategori)
+                                <div class="col-md-6">
+                                    <div class="form-check mb-2">
+                                        <input class="form-check-input" type="checkbox" name="kategori[]"
+                                            value="{{ $kategori }}" id="kategori{{ $index }}" required>
+                                        <label class="form-check-label" for="kategori{{ $index }}">
+                                            {{ $kategori }}
+                                        </label>
+                                    </div>
+                                </div>
+                            @endforeach
                         </div>
                     </div>
+
 
                     <div class="mb-3">
 
                         <p class="text-muted small">Berikan penjelasan lengkap atas kejadian yang dilaporkan</p>
-                        <input class="form-control" id="kronologi" name="penjelasan" rows="4"></input>
+                        <input class="form-control" id="kronologi" name="penjelasan" required rows="4"></input>
                     </div>
                     <div class="mb-3">
 
                         <p class="text-muted small">Lokasi tempat kejadian</p>
-                        <input class="form-control" id="lokasi_kejadian" name="lokasi_kejadian" rows="4"></input>
+                        <input class="form-control" id="lokasi_kejadian" name="lokasi_kejadian" required
+                            rows="4"></input>
                     </div>
                     <div class="mb-3">
 
                         <p class="text-muted small">Kapan terjadinya? (jelaskan tanggal, waktu, selama/selepas jam kerja)
                         </p>
-                        <input class="form-control" id="waktu_kejadian" name="waktu_kejadian" rows="4"></input>
+                        <input class="form-control" id="waktu_kejadian" name="waktu_kejadian" required
+                            rows="4"></input>
                     </div>
                     <div class="mb-3">
 
                         <p class="text-muted small">Berikan penjelasan bagaimana kejadiannya (kronologis)
                         </p>
-                        <textarea class="form-control" id="kronologi" name="kronologi" rows="4"></textarea>
+                        <textarea class="form-control" id="kronologi" name="kronologi" required rows="4"></textarea>
                     </div>
 
                     <div class="mb-3">
-                        <label for="kerugian" class="form-label fw-bold">Perkiraan Kerugian</label>
+                        <label for="perkiraan_kerugian" class="form-label fw-bold">Perkiraan Kerugian</label>
                         <p class="text-muted small">Jika ada, mohon sampaikan nilai kerugian akibat kejadian ini.</p>
-                        <input type="text" class="form-control" id="kerugian" name="kerugian">
+                        <input type="text" class="form-control" id="perkiraan_kerugian" name="perkiraan_kerugian"
+                            required>
                     </div>
 
                     <div class="mb-3">
@@ -230,7 +253,7 @@
             </div>
         </div>
         <div class="mt-4 text-end">
-            <button type="submit" class="btn btn-success">Kirim Laporan</button>
+            <button type="submit" class="btn btn-success" id="submitButton">Kirim Laporan</button>
         </div>
     </form>
 @endsection

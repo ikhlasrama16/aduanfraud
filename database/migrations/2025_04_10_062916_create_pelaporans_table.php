@@ -13,41 +13,44 @@ return new class extends Migration
      */
     public function up()
     {
-        // Schema::create('pelaporans', function (Blueprint $table) {
-        //     $table->id();
+        Schema::create('pelaporans', function (Blueprint $table) {
+            $table->id();
 
-        //     // Kolom ID Laporan (untuk ID custom seperti LAP00001)
-        //     $table->string('id_laporan')->unique();
+            // ID Laporan Kustom
+            $table->string('id_laporan')->unique();
 
-        //     // Identitas Pelapor
-        //     $table->string('nama_pelapor');
-        //     $table->string('nik')->nullable();
-        //     $table->string('alamat')->nullable();
-        //     $table->string('no_telp')->nullable();
-        //     $table->string('email')->nullable();
-        //     $table->string('hubungan_dengan_terlapor')->nullable();
-        //     $table->enum('identitas_terbuka', ['ya', 'tidak'])->default('tidak');
+            // Identitas Pelapor
+            $table->enum('anonymous', ['ya', 'tidak'])->default('tidak'); // dari radio button
+            $table->string('nama_pelapor')->nullable(); // nullable karena bisa anonymous
+            $table->string('nik')->nullable();
+            $table->string('pihak')->nullable(); // internal / eksternal
+            $table->string('lokasi')->nullable(); // lokasi mitra
+            $table->string('telepon')->nullable();
+            $table->string('email')->nullable();
 
-        //     // Isi Pelaporan
-        //     $table->string('nama_terlapor')->nullable();
-        //     $table->string('jabatan_terlapor')->nullable();
-        //     $table->text('penjelasan')->nullable();
-        //     $table->text('lokasi_kejadian')->nullable();
-        //     $table->text('tanggal_kejadian')->nullable();
-        //     $table->text('file_bukti')->nullable();
+            // Informasi Terlapor
+            $table->string('nama_terlapor')->nullable();
+            $table->string('jabatan_terlapor')->nullable();
 
-        //     // Dugaan Orang Lain Terlibat
-        //     $table->json('dugaan_terlibat')->nullable();
+            // Detail Pelaporan
+            $table->json('kategori_pelanggaran')->nullable();
+            $table->string('penjelasan')->nullable();
+            $table->string('lokasi_kejadian')->nullable();
+            $table->string('waktu_kejadian')->nullable();
+            $table->text('kronologi')->nullable();
 
-        //     // Saksi Mata
-        //     $table->json('saksi_mata')->nullable();
+            // Lain-lain
+            $table->string('perkiraan_kerugian')->nullable();
+            $table->string('saksi')->nullable();
+            $table->text('file_bukti')->nullable(); // path-nya
+            $table->json('dugaan_terlibat')->nullable(); // array nama & jabatan
+            $table->json('saksi_mata')->nullable(); // array nama & jabatan
+            $table->text('kejadian_terulang')->nullable();
+            $table->string('kerugian_finansial')->nullable();
 
-        //     // Pertanyaan Tambahan
-        //     $table->text('kejadian_terulang')->nullable();
-        //     $table->string('kerugian_finansial')->nullable();
 
-        //     $table->timestamps();
-        // });
+            $table->timestamps();
+        });
     }
 
 

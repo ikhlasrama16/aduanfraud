@@ -3,6 +3,7 @@
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\PagesController;
+use App\Http\Controllers\PelaporanController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -23,6 +24,8 @@ Route::get('/about', [PagesController::class, 'about'])->name('page.about');
 Route::get('/login', [LoginController::class, 'login'])->name('login');
 Route::post('/loginprocess', [LoginController::class, 'login_proccess'])->name('auth.loginprocess');
 Route::get('/logout', [LoginController::class, 'logout'])->name('auth.logout');
+
+Route::post('/pelaporan_process', [PelaporanController::class, 'store'])->name('pelaporan_process');
 
 // routes/web.php
 
